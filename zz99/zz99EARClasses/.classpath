@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-11">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="oracle.eclipse.tools.weblogic.lib.application/zz99EAR"/>
+	<classpathentry kind="src" path="resources"/>
+	<classpathentry kind="con" path="oracle.eclipse.tools.weblogic.lib.system">
+		<attributes>
+			<attribute name="module" value="true"/>
+			<attribute name="owner.project.facets" value="#system#;jst.utility"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/XLNETS"/>
+	<classpathentry kind="lib" path="C:/Weblogic_domains/domain_wls14/xlnets/aplic/n38/lib/n38a.jar"/>
+	<classpathentry kind="lib" path="C:/Weblogic_domains/domain_wls14/xlnets/aplic/n38/lib/n38i.jar"/>
+	<classpathentry kind="lib" path="C:/Weblogic_domains/domain_wls14/xlnets/aplic/n38/lib/n38n.jar"/>
+	<classpathentry kind="lib" path="C:/Weblogic_domains/domain_wls14/xlnets/aplic/n38/lib/n38c.jar"/>
+	<classpathentry kind="output" path="build/classes"/>
+</classpath>

@@ -1,0 +1,81 @@
+<project 
+		xmlns="http://maven.apache.org/POM/4.0.0"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<!-- ====================================================================== -->
+	<!-- == MODEL VERSION                                                    == -->
+	<!-- ====================================================================== -->
+	<modelVersion>4.0.0</modelVersion>
+	<!-- ====================================================================== -->
+	<!-- == PROJECT INFO                                                     == -->
+	<!-- ====================================================================== -->
+	<groupId>com.ejie.zz99</groupId>
+	<artifactId>zz99EAR</artifactId>
+	<packaging>pom</packaging>
+	<version>1.0-SNAPSHOT</version>
+	<!-- ====================================================================== -->
+	<!-- == PROPERTIES                                                       == -->
+	<!-- ====================================================================== -->
+	<properties>
+		<jacoco.version>0.8.8</jacoco.version>
+		<sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
+		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+		<sonar.language>java</sonar.language>
+		<sonar.sourceEncoding>UTF-8</sonar.sourceEncoding>
+		<sonar.projectName>Practica UDA - zz99</sonar.projectName>
+	</properties>
+	<!-- ====================================================================== -->
+	<!-- == MODULES                                                          == -->
+	<!-- ====================================================================== -->
+	<modules>
+		<module>zz99EARClasses</module>
+		<module>zz99PracticaWar</module>
+	</modules>
+	<!-- ====================================================================== -->
+	<!-- == BUILD                                                            == -->
+	<!-- ====================================================================== -->
+	<build>
+		<sourceDirectory>src</sourceDirectory>
+		<outputDirectory>target</outputDirectory>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>11</source>
+					<target>11</target>
+					<excludes>
+						<exclude>**/*.*</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+		</plugins>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+				</plugin>
+				<plugin>
+					<groupId>org.jacoco</groupId>
+					<artifactId>jacoco-maven-plugin</artifactId>
+					<version>${jacoco.version}</version>
+					<executions>
+						<execution>
+							<id>prepare-agent</id>
+							<goals>
+								<goal>prepare-agent</goal>
+							</goals>
+						</execution>
+						<execution>
+							<id>report</id>
+							<goals>
+								<goal>report</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+</project>

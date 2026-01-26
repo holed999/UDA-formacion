@@ -1,0 +1,22 @@
+{
+	"situacion": {
+		"alta": "Alta",
+		"baja": "Baja"
+	},
+	"operacion": {
+		"anadir": "Añadir",
+		"editar": "Editar", 
+		"borrar": "Borrar",
+		"seleccionar": "[Seleccionar]"
+	},
+	"comun": {
+		"cargando": "Cargando",
+		"guardando": "Guardando",
+		"exportar": "Exportar"
+	},
+	"botones": {
+		"borrar": "Borrar",
+		"eliminar": "Eliminar",
+		"abrir": "Abrir"
+	}
+}

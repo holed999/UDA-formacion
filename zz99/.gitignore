@@ -1,0 +1,10 @@
+RemoteSystemsTempFiles
+Servers
+.metadata
+.recommenders
+.sonarlint
+
+zz99EARClasses/build/
+zz99PracticaWar/build/
+**/.svn
+**/.class

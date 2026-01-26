@@ -1,0 +1,24 @@
+{
+	"situacion": {
+		"alta": "Alta",
+		"baja": "Baja"
+	},
+	"operacion": {
+		"anadir": "Gehitu",
+		"editar": "Editatu",
+		"borrar": "Ezabatu",
+		"seleccionar": "[Hautatu]"
+	},
+	"comun": {
+		"cargando": "Kargatzen",
+		"guardando": "Gordetzen",
+		"exportar": "Esportatu"
+	},
+	"botones": {
+		"borrar": "Kendu",
+		"eliminar": "Ezabatu",
+		"abrir": "Ireki",
+		"principalSi": "Markatu nagusitzat",
+		"principalNo": "Desmarkatu nagusitzat"
+	}
+}
