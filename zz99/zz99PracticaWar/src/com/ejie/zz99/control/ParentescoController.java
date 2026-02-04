@@ -1,6 +1,9 @@
 package com.ejie.zz99.control;
 
 import java.io.IOException;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.List;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -80,12 +83,24 @@ public class ParentescoController {
 		return rdo;
 	}
 	
-	@RequestMapping(value = "/multiBaja", method = RequestMethod.PUT)
-	public @ResponseBody Parentesco multibaja(@RequestBody Parentesco parentesco) {
-		logger.info("[PUT] : Parentesco: multibaja");
-		Parentesco rdo = this.parentescoService.add(parentesco);
-		logger.info("[PUT] : Parentescos dados de baja correctamente");
-		return rdo;
+	// Añadir este método junto con los demás métodos PUT
+	@RequestMapping(value = "/bajaMultiple", method = RequestMethod.PUT)
+	public @ResponseBody Map<String, Object> bajaMultiple(@RequestBody List<Integer> ids) {
+	    logger.info("[PUT] : Parentesco: bajaMultiple para " + (ids != null ? ids.size() : 0) + " registros");
+	    
+	    Map<String, Object> response = new HashMap<>();
+	    try {
+	        boolean resultado = this.parentescoService.bajaMultiple(ids);
+	        response.put("success", resultado);
+	        response.put("message", "Baja múltiple completada para " + ids.size() + " registros");
+	        logger.info("[PUT] : Baja múltiple completada correctamente");
+	        return response;
+	    } catch (Exception e) {
+	        logger.error("Error en baja múltiple", e);
+	        response.put("success", false);
+	        response.put("message", "Error al realizar la baja múltiple: " + e.getMessage());
+	        return response;
+	    }
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.PUT)

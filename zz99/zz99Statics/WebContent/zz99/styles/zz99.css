@@ -951,3 +951,11 @@ h1.tit-detalle {
 	padding-right: 15px;
     padding-left: 15px;
 }
+
+.rup-button-bajamultiple .rup-button-icon::before,
+.rup-toolbar-button-bajamultiple .rup-button-icon::before,
+#btnMiNuevoBoton .rup-button-icon::before {
+    font-family: 'Material Design Icons';
+    content: "\F1C1"; /* Código para icono de archivo/múltiple */
+    /* O usa el nombre: content: "archive"; */
+}

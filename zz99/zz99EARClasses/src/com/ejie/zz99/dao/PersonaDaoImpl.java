@@ -22,23 +22,26 @@ public class PersonaDaoImpl extends GenericoDaoImpl<Persona> implements PersonaD
 		super(Persona.class, rwMap, rwMapPk, ORDER_BY_WHITE_LIST);
 	}
 
-	protected static final String[] ORDER_BY_WHITE_LIST = new String[] { ID_Persona, "DPERSONAC_02", "DPERSONAE_01",
-			"SITUACION_01" };
+	protected static final String[] ORDER_BY_WHITE_LIST = new String[] { ID_Persona, "NOMBRE_03", "APELLIDO1_03",
+			"APELLIDO2_03", "FECHA_NACIMIENTO_03", "TLFONO_03", "PROVINCIA_03", "MUNICIPIO_03", "CP_03",
+			"DIRECCION_03" };
 
 	private static RowMapper<Persona> rwMap = new RowMapper<Persona>() {
 		@Override
 		public Persona mapRow(ResultSet resultSet, int rowNum) throws SQLException {
 			Persona bean = new Persona();
 			bean.setIdentificador(resultSet.getInt(ID_Persona));
-			bean.setSituacion(Situacion.fromString(resultSet.getString("SITUACION_02")));
-			bean.setDescEs(resultSet.getString("DPERSONAC_02"));
-			bean.setDescEu(resultSet.getString("DPERSONAE_02"));
-			bean.setFecha(resultSet.getDate("FECHA_02"));
-			bean.setSituacion(Situacion.fromString(resultSet.getString("SITUACION_02")));
-			bean.setDescEs(resultSet.getString("DPERSONAC_02"));
-			bean.setDescEu(resultSet.getString("DPERSONAE_02"));
-			bean.setFecha(resultSet.getDate("FECHA_02"));
-			bean.setFecha(resultSet.getDate("FECHA_02"));
+			bean.setNombre(resultSet.getString("NOMBRE_03"));
+			bean.setApellido1(resultSet.getString("APELLIDO1_03"));
+			bean.setApellido2(resultSet.getString("APELLIDO2_03"));
+			bean.setFechaNacimiento(resultSet.getDate("FECHA_NACIMIENTO_03"));
+			bean.setTelefono(resultSet.getString("TLFONO_03"));
+			bean.setProvincia(resultSet.getInt("PROVINCIA_03"));
+			bean.setMunicipio(resultSet.getInt("MUNICIPIO_03"));
+			bean.setCodigoPostal(resultSet.getString("CP_03"));
+			bean.setDireccion(resultSet.getString("DIRECCION_03"));
+			// Si Persona tiene campo situacion, se puede mapear si existe en la tabla
+			// bean.setSituacion(Situacion.fromString(resultSet.getString("SITUACION_03")));
 			return bean;
 		}
 	};
@@ -54,16 +57,21 @@ public class PersonaDaoImpl extends GenericoDaoImpl<Persona> implements PersonaD
 
 	@Override
 	protected void getSelect(StringBuilder select) {
-		select.append("SELECT  t1.CPERSONA_02");
-		select.append(", t1.DPERSONAC_02");
-		select.append(", t1.DPERSONAE_02");
-		select.append(", t1.SITUACION_02");
-		select.append(", t1.FECHA_02");
+		select.append("SELECT  t1.ID_03");
+		select.append(", t1.NOMBRE_03");
+		select.append(", t1.APELLIDO1_03");
+		select.append(", t1.APELLIDO2_03");
+		select.append(", t1.FECHA_NACIMIENTO_03");
+		select.append(", t1.TLFONO_03");
+		select.append(", t1.PROVINCIA_03");
+		select.append(", t1.MUNICIPIO_03");
+		select.append(", t1.CP_03");
+		select.append(", t1.DIRECCION_03");
 	}
 
 	@Override
 	protected void getFrom(StringBuilder from) {
-		from.append(" FROM ZZ99_PERSONA t1");
+		from.append(" FROM ZZ99_PERSONA_03 t1");
 	}
 
 	@Override
@@ -73,60 +81,71 @@ public class PersonaDaoImpl extends GenericoDaoImpl<Persona> implements PersonaD
 
 	@Override
 	protected void getWherePK(StringBuilder wherePk, Persona bean, List<Object> params) {
-		wherePk.append(" WHERE t1.CPERSONA_02 = ? ");
+		wherePk.append(" WHERE t1.ID_03 = ? ");
 		params.add(bean.getIdentificador());
 	}
 
 	@Override
 	protected void getWhere(StringBuilder where, Persona persona, List<Object> params, Boolean search) {
-		where.append(this.generarWhereIgual("t1.CPERSONA_02", persona.getIdentificador(), params));
-		where.append(this.generarWhereLike("t1.DPERSONAC_02", persona.getDescEs(), params));
-		where.append(this.generarWhereLike("t1.DPERSONAE_02", persona.getDescEu(), params));
-		where.append(this.generarWhereLike("t1.DPERSONAC_02", "t1.DPERSONAE_02", persona.getDescFilter(), params));
+		where.append(this.generarWhereIgual("t1.ID_03", persona.getIdentificador(), params));
+		where.append(this.generarWhereLike("t1.NOMBRE_03", persona.getNombre(), params));
+		where.append(this.generarWhereLike("t1.APELLIDO1_03", persona.getApellido1(), params));
+		where.append(this.generarWhereLike("t1.APELLIDO2_03", persona.getApellido2(), params));
+		where.append(this.generarWhereLike("t1.TLFONO_03", persona.getTelefono(), params));
+		where.append(this.generarWhereIgual("t1.PROVINCIA_03", persona.getProvincia(), params));
+		where.append(this.generarWhereIgual("t1.MUNICIPIO_03", persona.getMunicipio(), params));
+		where.append(this.generarWhereLike("t1.CP_03", persona.getCodigoPostal(), params));
+		where.append(this.generarWhereLike("t1.DIRECCION_03", persona.getDireccion(), params));
 
-		if (null != persona.getSituacion()) {
-			where.append(this.generarWhereIgual("t1.SITUACION_02", persona.getSituacion().getValue(), params));
-		}
+		// Si quieres buscar por nombre o apellidos juntos, puedes añadir algo como:
+		// where.append(this.generarWhereLike("t1.NOMBRE_03", "t1.APELLIDO1_03",
+		// "t1.APELLIDO2_03", persona.getNombreCompleto(), params));
 
 		if (persona instanceof PersonaFilter) {
 			PersonaFilter aux = (PersonaFilter) persona;
-
-			where.append(this.generarWhereMayorIgualFecha("t1.FECHA_02", aux.getFechaDesde(), params));
-			where.append(this.generarWhereMenorIgualFecha("t1.FECHA_02", aux.getFechaHasta(), params));
+			where.append(this.generarWhereMayorIgualFecha("t1.FECHA_NACIMIENTO_03", aux.getFechaDesde(), params));
+			where.append(this.generarWhereMenorIgualFecha("t1.FECHA_NACIMIENTO_03", aux.getFechaHasta(), params));
 		}
 	}
 
 	@Override
 	public Persona add(Persona persona) {
-		StringBuilder query = new StringBuilder("INSERT INTO ZZ99_PERSONA ");
-		query.append("(CPERSONA_02, DPERSONAC_02, DPERSONAE_02, SITUACION_02, FECHA_02) ");
-		query.append("VALUES (?,?,?,?,?)");
+		StringBuilder query = new StringBuilder("INSERT INTO ZZ99_PERSONA_03 ");
+		query.append("(ID_03, NOMBRE_03, APELLIDO1_03, APELLIDO2_03, FECHA_NACIMIENTO_03, ");
+		query.append("TLFONO_03, PROVINCIA_03, MUNICIPIO_03, CP_03, DIRECCION_03) ");
+		query.append("VALUES (?,?,?,?,?,?,?,?,?,?)");
 
-		Integer id = this.getNextVal("ZZ9903Q00");
-		this.getJdbcTemplate().update(query.toString(), id, persona.getDescEs(), persona.getDescEu(),
-				persona.getSituacion().getValue(), persona.getFecha());
+		Integer id = this.getNextVal("ZZ9903T00");
+		this.getJdbcTemplate().update(query.toString(), id, persona.getNombre(), persona.getApellido1(),
+				persona.getApellido2(), persona.getFechaNacimiento(), persona.getTelefono(), persona.getProvincia(),
+				persona.getMunicipio(), persona.getCodigoPostal(), persona.getDireccion());
 		persona.setIdentificador(id);
 		return persona;
 	}
 
 	@Override
 	public Persona update(Persona persona) {
-		StringBuilder query = new StringBuilder("UPDATE ZZ99_PERSONA SET ");
-		query.append("DPERSONAC_02 = ?");
-		query.append(", DPERSONAE_02 = ? ");
-		query.append(", SITUACION_02 = ? ");
-		query.append(", FECHA_02 = ? ");
-		query.append(" WHERE CPERSONA_02 = ? ");
+		StringBuilder query = new StringBuilder("UPDATE ZZ99_PERSONA_03 SET ");
+		query.append("NOMBRE_03 = ?");
+		query.append(", APELLIDO1_03 = ? ");
+		query.append(", APELLIDO2_03 = ? ");
+		query.append(", FECHA_NACIMIENTO_03 = ? ");
+		query.append(", TLFONO_03 = ? ");
+		query.append(", PROVINCIA_03 = ? ");
+		query.append(", MUNICIPIO_03 = ? ");
+		query.append(", CP_03 = ? ");
+		query.append(", DIRECCION_03 = ? ");
+		query.append(" WHERE ID_03 = ? ");
 
-		this.getJdbcTemplate().update(query.toString(), persona.getDescEs(), persona.getDescEu(),
-				persona.getSituacion().getValue(), persona.getFecha(), persona.getIdentificador());
+		this.getJdbcTemplate().update(query.toString(), persona.getNombre(), persona.getApellido1(),
+				persona.getApellido2(), persona.getFechaNacimiento(), persona.getTelefono(), persona.getProvincia(),
+				persona.getMunicipio(), persona.getCodigoPostal(), persona.getDireccion(), persona.getIdentificador());
 		return persona;
 	}
 
 	@Override
 	public void remove(Persona persona) {
-		String query = "DELETE FROM ZZ99_PERSONA WHERE CPERSONA_02=?";
+		String query = "DELETE FROM ZZ99_PERSONA_03 WHERE ID_03=?";
 		this.getJdbcTemplate().update(query, persona.getIdentificador());
 	}
-
 }

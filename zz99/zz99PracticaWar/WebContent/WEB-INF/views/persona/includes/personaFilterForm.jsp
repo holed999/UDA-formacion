@@ -58,12 +58,6 @@
 				<i class="mdi mdi-eraser"></i> <span><spring:message
 						code="clear" /></span>
 			</button>
-			<!-- Botón de filtrado -->
-			<button id="persona_filter_filterButton1" type="button"
-				class="btn-material btn-material-primary-high-emphasis">
-				<i class="mdi mdi-filter"></i> <span><spring:message
-						code="filter" /></span>
-			</button>
 		</div>
 	</fieldset>
 </form:form>
